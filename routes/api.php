@@ -1,0 +1,32 @@
+<?php
+
+use App\Http\Controllers\Admin\AuthAdminController;
+use App\Http\Controllers\Admin\UserAdminController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "api" middleware group. Make something great!
+|
+*/
+
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::middleware('api')->group(function () {
+    Route::post('/admin/store-login', [AuthAdminController::class, 'login']);
+});
+
+
+
+Route::post('/admin/create-user', [UserAdminController::class, 'storeUser']);
+Route::post('/admin/update-user', [UserAdminController::class, 'updateUser']);
+Route::post('/admin/get-user', [UserAdminController::class, 'getDataUser']);
+Route::post('/admin/delete-user', [UserAdminController::class, 'deleteUser']);
