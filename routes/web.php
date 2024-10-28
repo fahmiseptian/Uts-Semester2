@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthAdminController;
 use App\Http\Controllers\Admin\HomeAdminController;
+use App\Http\Controllers\Admin\ProductAdminController;
 use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -26,5 +27,8 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::group(['middleware' => ['check.admin']], function () {
     Route::get('/admin', [HomeAdminController::class, 'index']);
+
     Route::get('/admin/user', [UserAdminController::class, 'index'])->name('admin.users');
+
+    Route::get('/admin/product', [ProductAdminController::class, 'index'])->name('admin.products');
 });

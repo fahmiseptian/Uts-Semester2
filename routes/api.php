@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthAdminController;
+use App\Http\Controllers\Admin\ProductAdminController;
 use App\Http\Controllers\Admin\UserAdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,13 +21,8 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::middleware('api')->group(function () {
-    Route::post('/admin/store-login', [AuthAdminController::class, 'login']);
-});
-
-
-
 Route::post('/admin/create-user', [UserAdminController::class, 'storeUser']);
 Route::post('/admin/update-user', [UserAdminController::class, 'updateUser']);
 Route::post('/admin/get-user', [UserAdminController::class, 'getDataUser']);
 Route::post('/admin/delete-user', [UserAdminController::class, 'deleteUser']);
+Route::post('/admin/store-product', [ProductAdminController::class, 'storeProduct']);

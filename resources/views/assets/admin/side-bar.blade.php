@@ -72,9 +72,10 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="{{ route('admin.products') }}">
             <i class="fas fa fa-sitemap"></i>
-            <span>Product</span></a>
+            <span>Product</span>
+        </a>
     </li>
 
     <!-- Divider -->

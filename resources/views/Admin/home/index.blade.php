@@ -88,6 +88,26 @@
                         }
                     });
                 });
+
+                $('.nav-link').on('click', function(event) {
+                    $('.loading-overlay').show();
+                    event.preventDefault(); // Prevent default link behavior
+                    var url = $(this).attr('href'); // Get the URL from href attribute
+                    // Load content via AJAX
+                    $.ajax({
+                        url: url,
+                        method: 'GET',
+                        success: function(data) {
+                            $('.loading-overlay').hide();
+                            $('#content-page').html(
+                                data); // Insert response data into #content-page
+                        },
+                        error: function() {
+                            $('#content-page').html(
+                                '<p>Error loading content.</p>'); // Error handling
+                        }
+                    });
+                });
             });
         </script>
 </body>
