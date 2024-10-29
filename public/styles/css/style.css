@@ -6,12 +6,40 @@
     --border-color: #e5e5e5;
 }
 
+/* Default font untuk semua perangkat */
 body {
+    font-family: Arial, sans-serif; /* Font default */
+    font-size: 16px; /* Ukuran font default */
     background-color: var(--background);
+    color: var(--main-green);
 }
 
+/* Untuk perangkat mobile (max-width: 600px) */
+@media (max-width: 600px) {
+    body {
+        font-family: "Roboto", sans-serif; /* Font untuk perangkat mobile */
+        font-size: 12px; /* Ukuran font untuk perangkat mobile */
+    }
+}
+
+/* Untuk tablet (min-width: 601px dan max-width: 1024px) */
+@media (min-width: 601px) and (max-width: 1024px) {
+    body {
+        font-family: "Helvetica", sans-serif; /* Font untuk perangkat tablet */
+        font-size: 18px; /* Ukuran font untuk perangkat tablet */
+    }
+}
+
+/* Untuk desktop (min-width: 1025px) */
+@media (min-width: 1025px) {
+    body {
+        font-family: "Times New Roman", serif; /* Font untuk perangkat desktop */
+        font-size: 20px; /* Ukuran font untuk perangkat desktop */
+    }
+}
 a {
     text-decoration: none;
+    color: var(--main-green);
 }
 
 /* Header Styles */
@@ -220,4 +248,49 @@ section .d-flex img {
 }
 .load-more svg {
     margin-left: 5px;
+}
+
+#cotainer-category {
+    background-color: var(--border-color);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.btn-detail {
+    border: var(--main-green) solid 1px;
+    color: var(--main-green);
+    padding: 5px 10px;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+    font-size: smaller;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between; /* Atur jarak antara tombol */
+}
+
+.btn-detail, .btn-cart {
+    flex: 1; /* Membuat kedua tombol memiliki lebar yang sama */
+    text-align: center; /* Mengatur teks agar berada di tengah */
+    padding: 2px;
+    border-radius: 9px;
+    text-decoration: none; 
+    box-shadow: 2px 1px 0px 0 var(--main-green);
+}
+
+.btn-cart {
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light-gray); /* Ganti dengan warna yang diinginkan */
+    color: var(--main-green);
+    margin-left: 10px; /* Menambahkan jarak antara tombol */
+    border: var(--main-green) solid 1px;
+    font-size: smaller;
+    
+}
+
+#footer-user{
+    background-color: var(--main-green);
 }

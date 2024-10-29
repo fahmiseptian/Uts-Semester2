@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\AuthAdminController;
 use App\Http\Controllers\Admin\ProductAdminController;
 use App\Http\Controllers\Admin\UserAdminController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

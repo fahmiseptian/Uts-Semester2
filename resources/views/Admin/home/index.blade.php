@@ -90,10 +90,12 @@
                 });
 
                 $('.nav-link').on('click', function(event) {
+                    var url = $(this).attr('href');
+                    event.preventDefault();
+                    if (url == '#') {
+                        return;
+                    }
                     $('.loading-overlay').show();
-                    event.preventDefault(); // Prevent default link behavior
-                    var url = $(this).attr('href'); // Get the URL from href attribute
-                    // Load content via AJAX
                     $.ajax({
                         url: url,
                         method: 'GET',

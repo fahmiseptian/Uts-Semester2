@@ -32,8 +32,9 @@
     </section>
 
     <!-- Categories Section -->
-    <section class="container mt-4 ">
-        <h5>Kategori Pilihan</h5>
+    <section class="container mt-4 " id="cotainer-category">
+        <h5 style="margin-bottom: 20px;">Kategori Pilihan</h5>
+        <hr>
         <div class="d-flex justify-content-between">
             <div class="text-center mx-2">
                 <img src="{{ asset('img/k-wanita.png') }}" class="rounded mb-2 logo-category" alt="Category 1">
@@ -151,23 +152,74 @@
     <!-- Product List Section -->
     <section class="container mt-4">
         <h5>Produk Terbaru</h5>
+        <hr>
         <div class="row">
+            @foreach ($products as $product)
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="card h-100">
-                    <img src="{{ asset('img/default-product.jpg') }}" class="card-img-top" alt="Product Image">
+                    <img src="{{ $product->getFirstMediaUrl('product') }}" class="card-img-top" alt="Product Image">
                     <div class="card-body">
-                        <h6 class="card-title">Product Name 1</h6>
-                        <p class="card-text text-muted">Rp 100.000</p>
-                        <a href="#" class="btn btn-primary w-100">Lihat Detail</a>
+                        <h6 class="card-title">{{ $product->nama }}</h6>
+                        <p class="card-text text-muted">{{ 'Rp' . number_format($product->harga, 0, ',', '.') }}</p>
+                        <div class="button-group w-100 mt-2">
+                            <a href="#" class="btn-detail">Detail</a>
+                            <a href="#" class="btn-cart" title="Tambah ke Keranjang" data-id="{{ $product->id }}">
+                                <span class="material-icons">add_shopping_cart</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
     </section>
 
-    
-
+    @include('home.modal')
     @include('assets.user.footer')
+    <script>
+        $('.btn-cart').on('click', function(e) {
+            e.preventDefault(); // Mencegah aksi default link
+
+            var productId = $(this).data('id');
+
+            $.ajax({
+                url: '/addCart',
+                type: 'POST',
+                data: {
+                    id_product: productId,
+                    qty: 1,
+                },
+                xhrFields: {
+                    withCredentials: true // Include cookies with the request
+                },
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: 'Sukses!',
+                            text: 'Produk berhasil ditambahkan ke keranjang!',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+                    } else {
+                        Swal.fire({
+                            title: 'Gagal!',
+                            text: 'Gagal menambahkan produk ke keranjang: ' + response.message,
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: 'Terjadi kesalahan!',
+                        text: 'Kesalahan: ' + error,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

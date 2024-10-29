@@ -21,4 +21,9 @@ class Product  extends Model implements HasMedia
     {
         $this->addMediaCollection('images');
     }
+
+    public static function GetProductActive()
+    {
+        return self::where('status', 'active')->get();
+    }
 }
