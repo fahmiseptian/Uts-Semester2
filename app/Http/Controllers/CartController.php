@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use App\Models\Cart;
 use App\Models\DetailCart;
 use App\Models\Product;
@@ -83,6 +84,88 @@ class CartController extends BaseController
         return response()->json([
             'success' => true,
             'message' => 'Item successfully added to cart and detail cart.'
+        ]);
+    }
+
+    public function show_cart()
+    {
+        $id_user    = $this->data['id_user'];
+        $check      = $this->model['Cart']->checkCart($id_user);
+
+        if ($check > 0) {
+            $id_cart = $this->model['Cart']->createCart($id_user);
+            $cart = $this->model['Cart']->getCart($id_cart);
+
+            // return response()->json(['cart'=>$cart]);
+            return view('cart.cart', ['cart' => $cart]);
+        }
+        return view('cart.empty-cart');
+    }
+
+    function checkout()
+    {
+        $id_user    = $this->data['id_user'];
+        $check      = $this->model['Cart']->checkCart($id_user);
+
+        if ($check > 0) {
+            $id_cart = $this->model['Cart']->createCart($id_user);
+            $data_cart_selected = $this->model['Cart']->getSelectedCart($id_cart);
+
+            // return response()->json(['cart'=>$data_cart_selected]);
+            return view('cart.checkout', ['cart' => $data_cart_selected]);
+        }
+        return view('cart.empty-cart');
+    }
+
+    function storeCheckout(Request $request)
+    {
+        $name = $request->input('name');
+        $address = $request->input('address');
+        $city = $request->input('city');
+        $code_pos = $request->input('postalCode');
+        $phone = $request->input('phone');
+        $pm = $request->input('paymentMethod');
+
+        $id_user    = $this->data['id_user'];
+        $check      = $this->model['Cart']->checkCart($id_user);
+
+        if ($check > 0) {
+            $id_cart = $this->model['Cart']->createCart($id_user);
+
+            $data_address = [
+                'id_user' => $id_user,
+                'recipient_name' => $name,
+                'address' => $address,
+                'city' => $city,
+                'zip_code' => $code_pos,
+                'phone_number' => $phone,
+            ];
+
+            $address = Address::create($data_address);
+
+            if (!$address) {
+                return response()->json(data: [
+                    'success' => false,
+                    'massage' => 'Failed to process the address',
+                ]);
+            }
+            $checkout = $this->model['Cart']->FinishCheckout($id_cart, $pm, $address->id);
+
+            if (!$checkout) {
+                $address->delete();
+                return response()->json(data: [
+                    'success' => false,
+                    'massage' => 'Checkout process failed',
+                ]);
+            }
+            return response()->json(data: [
+                'success' => false,
+                'massage' => 'Checkout process succeed',
+            ]);
+        }
+        return response()->json(data: [
+            'success' => false,
+            'massage' => 'Checkout process failed',
         ]);
     }
 }

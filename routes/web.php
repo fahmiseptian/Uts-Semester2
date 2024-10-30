@@ -23,10 +23,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['web']], function () {
     Route::post('/login', [AuthController::class, 'login']);
-    Route::get('/', [HomeController::class, 'index']);
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::group(['middleware' => ['check.buyer']], function () {
         Route::post('/addCart', [CartController::class, 'addCart']);
+        Route::get('/cart', [CartController::class, 'show_cart'])->name('cart');
+        Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+        Route::post('/checkout/finished', [CartController::class, 'storeCheckout'])->name('cart.checkout.finished');
     });
 
     Route::get('/admin/logout', [AuthAdminController::class, 'logout'])->name('admin.logout');

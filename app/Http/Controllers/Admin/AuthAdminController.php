@@ -45,6 +45,7 @@ class AuthAdminController extends BaseController
                     'id' => $user->id,
                     'nama' => $user->name,
                     'access' => $user->access,
+                    'is_admin' => true,
                 ]);
                 return response()->json(['success' => true]);
             }

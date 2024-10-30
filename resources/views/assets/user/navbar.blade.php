@@ -5,7 +5,7 @@
             <div class="d-flex align-items-center w-100">
                 <!-- Logo -->
                 <div id="navbar-logo" class="me-3">
-                    <a href="#">
+                    <a href="{{ route('home') }}">
                         <img src="{{ asset('img/logo-store.png') }}" alt="Logo" height="40">
                     </a>
                 </div>
@@ -20,7 +20,7 @@
 
                 <!-- Cart and Login/Profile icons (desktop) -->
                 <div id="navbar-icons" class="d-flex align-items-center ms-3 d-none d-lg-flex">
-                    <a href="#" class="me-3">
+                    <a href="{{ route('cart') }}" class="me-3">
                         <span class="material-icons google-icon" style="font-size: 24px;">shopping_cart</span>
                     </a>
 
@@ -42,7 +42,7 @@
 
         <!-- Mobile menu (Keranjang & Login/Profile) -->
         <div id="mobile-menu">
-            <a href="#" class="d-block mb-2 google-icon" style="font-size: smaller">
+            <a href="{{ route('cart') }}" class="d-block mb-2 google-icon" style="font-size: smaller">
                 <span class="material-icons me-1 google-icon">shopping_cart</span> Keranjang
             </a>
 
@@ -72,13 +72,13 @@
     <div class="offcanvas-body">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('cart') }}">
                     <span class="material-icons google-icon">shopping_cart</span> Keranjang
                 </a>
             </li>
             <!-- Login -->
             <li class="nav-item">
-                <a class="nav-link" href="#">Masuk</a>
+                <a class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal">Masuk</a>
             </li>
         </ul>
     </div>

@@ -17,7 +17,7 @@ class CheckAdmin
     public function handle(Request $request, Closure $next)
     {
         // Periksa apakah ID ada di sesi
-        if (!$request->session()->has('id')) {
+        if (!$request->session()->has('is_admin')) {
             // Jika tidak ada, redirect ke halaman login
             return redirect('/admin/login')->with('error', 'You must be logged in to access this page.');
         }
