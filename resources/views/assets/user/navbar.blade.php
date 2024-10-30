@@ -26,7 +26,7 @@
 
                     @if(session('nama'))
                     <!-- If logged in, show user's name -->
-                    <a href="#" class="me-3">{{ session('nama') }}</a>
+                    <a href="{{ route('profile') }}" class="me-3">{{ session('nama') }}</a>
                     @else
                     <!-- If not logged in, show login link -->
                     <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Masuk</a>
@@ -48,7 +48,7 @@
 
             @if(session('nama'))
             <!-- If logged in, show user's name in mobile menu -->
-            <a href="#" class="d-block google-icon" style="font-size: smaller">
+            <a href="{{ route('profile') }}" class="d-block google-icon" style="font-size: smaller">
                 <span class="material-icons me-1 google-icon">account_circle</span> {{ session('nama') }}
             </a>
             @else

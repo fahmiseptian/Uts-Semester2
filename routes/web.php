@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('/cart', [CartController::class, 'show_cart'])->name('cart');
         Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
         Route::post('/checkout/finished', [CartController::class, 'storeCheckout'])->name('cart.checkout.finished');
+
+        // 
+        Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     });
 
     Route::get('/admin/logout', [AuthAdminController::class, 'logout'])->name('admin.logout');
