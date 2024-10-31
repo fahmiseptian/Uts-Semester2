@@ -23,7 +23,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['web']], function () {
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::group(['middleware' => ['check.buyer']], function () {
@@ -34,6 +35,8 @@ Route::group(['middleware' => ['web']], function () {
 
         // 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+        Route::get('/get-content/{content}', [ProfileController::class, 'v_content']);
+        Route::post('/profile/update-profile', [ProfileController::class, 'updateProfile']);
     });
 
     Route::get('/admin/logout', [AuthAdminController::class, 'logout'])->name('admin.logout');

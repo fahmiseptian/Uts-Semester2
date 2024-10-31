@@ -128,7 +128,7 @@ class Cart  extends Model implements HasMedia
         return $cart;
     }
 
-    function FinishCheckout($id_cart, $pm , $id_address)
+    function FinishCheckout($id_cart, $pm, $id_address)
     {
         $invoice = $this->generateInvoice($id_cart);
         return self::where('id', $id_cart)
@@ -153,5 +153,44 @@ class Cart  extends Model implements HasMedia
         }
 
         return $invoice;
+    }
+
+    function getTranscasion($id_user)
+    {
+        $data = DB::table('cart as c')
+            ->select(
+                'c.total',
+                'c.qty',
+                'c.status',
+                'c.invoice',
+                'c.id'
+            )
+            ->where('c.id_user', $id_user)
+            ->whereNotNull('c.invoice')
+            ->get();
+
+        foreach ($data as $d) {
+            $d->products = DB::table('detail_cart as cd')
+                ->select(
+                    'cd.unit_price as harga_satuan',
+                    'cd.qty',
+                    'cd.is_selected',
+                    'p.nama as nama_produk',
+                    'p.id as id_produk'
+                )
+                ->join('product as p', 'cd.id_product', '=', 'p.id')
+                ->where('cd.id_cart', $d->id)
+                ->get()
+                ->map(function ($product) {
+                    $productModel = Product::find($product->id_produk);
+                    if ($productModel && $productModel->hasMedia('product')) {
+                        $product->image_url = $productModel->getFirstMediaUrl('product');
+                    } else {
+                        $product->image_url = null;
+                    }
+                    return $product;
+                });
+        }
+        return $data;
     }
 }

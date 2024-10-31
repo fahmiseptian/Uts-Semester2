@@ -65,6 +65,6 @@ class AuthController extends BaseController
         $request->session()->flush();
 
         // Redirect ke halaman login
-        return redirect('/admin/login')->with('success', 'You have been logged out successfully.');
+        return redirect('/')->with('success', 'You have been logged out successfully.');
     }
 }

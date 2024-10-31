@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class HomeController extends BaseController
@@ -14,6 +15,6 @@ class HomeController extends BaseController
     {
         $Mproducts = new Product();
         $products = $Mproducts->GetProductActive();
-        return view('home.index',['products' => $products]);
+        return view('home.index', ['products' => $products]);
     }
 }

@@ -7,7 +7,7 @@
     .profile-container {
         margin: 40px;
         margin-left: 5px;
-        /* display: flex; */
+        display: flex;
         flex-wrap: wrap;
         padding: 0;
     }
@@ -15,13 +15,16 @@
     .sidebar {
         min-width: 200px;
         max-width: 250px;
-        background-color: #007bff;
-        color: white;
-        padding: 20px 0;
+        color: #703e0b;
+        padding: 0;
+        padding-top: 10px;
+        padding-bottom: 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
         border-radius: 15px;
+        border: 1px solid #703e0b;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
     .sidebar button {
@@ -36,7 +39,7 @@
     }
 
     .sidebar button.active {
-        background-color: #0056b3;
+        background-color: white;
     }
 
     .submenu {
@@ -48,11 +51,11 @@
     .submenu button {
         font-size: 14px;
         padding: 5px 20px;
-        background: #0056b3;
+        background: white;
     }
 
     .submenu button.active {
-        background-color: #004080;
+        background-color: white;
     }
 
     .content {
@@ -73,6 +76,10 @@
 
     /* Responsive Styles */
     @media (max-width: 767px) {
+        .profile-container {
+            display: block;
+        }
+
         .sidebar {
             display: none;
             /* Hide sidebar on mobile */
@@ -89,6 +96,25 @@
             margin-left: 0;
             /* Align submenu without margin on mobile */
         }
+
+        .list-group-horizontal {
+            display: flex;
+            width: 100%;
+        }
+
+        /* Mengatur item agar memiliki lebar sama (full width) */
+        .list-group-horizontal .list-group-item {
+            flex: 1;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            /* Efek transisi untuk hover */
+        }
+
+        /* Efek hover */
+        .list-group-horizontal .list-group-item:hover {
+            background-color: #f0f8ff;
+            cursor: pointer;
+        }
     }
 </style>
 
@@ -98,8 +124,12 @@
 
     <div class="container-fluid profile-container">
         <!-- Logo Menu for Mobile -->
-        <div class="logo-menu text-center" onclick="toggleSidebar()">
-            <span class="material-icons" style="font-size: 48px;">menu</span>
+        <div class="logo-menu container my-4">
+            <ul class="list-group list-group-horizontal">
+                <li class="list-group-item" onclick="load('profile')">Profile</li>
+                <li class="list-group-item" onclick="load('all')">Transactions</li>
+                <li class="list-group-item" onclick="load('logout')">Logout</li>
+            </ul>
         </div>
 
         <!-- Sidebar Menu -->
@@ -139,8 +169,6 @@
     </div>
 
     @include('assets.user.footer')
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function loadContent(section) {
             // Set active class for menu items and handle submenu display
@@ -155,8 +183,10 @@
                 document.getElementById('submenu-transactions').style.display = 'flex';
                 document.querySelector(`#submenu-transactions button[onclick="loadContent('${section}')"]`).classList.add('active');
             }
+            load(section);
+        }
 
-            // AJAX call to load the content
+        function load(section) {
             $.ajax({
                 url: `/get-content/${section}`,
                 method: 'GET',
