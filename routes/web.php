@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AuthAdminController;
 use App\Http\Controllers\Admin\HomeAdminController;
+use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\ProductAdminController;
 use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\AuthController;
@@ -44,8 +45,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/admin/login', [AuthAdminController::class, 'index']);
 
     Route::group(['middleware' => ['check.admin']], function () {
-        Route::get('/admin', [HomeAdminController::class, 'index']);
+        Route::get('/admin', [HomeAdminController::class, 'index'])->name('admin');
         Route::get('/admin/user', [UserAdminController::class, 'index'])->name('admin.users');
         Route::get('/admin/product', [ProductAdminController::class, 'index'])->name('admin.products');
+        Route::get('/admin/invoice', [InvoiceController::class, 'index'])->name('admin.invoices');
     });
 });

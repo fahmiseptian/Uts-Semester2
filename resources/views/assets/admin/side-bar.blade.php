@@ -14,7 +14,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="#">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -75,6 +75,10 @@
         <a class="nav-link" href="{{ route('admin.products') }}">
             <i class="fas fa fa-sitemap"></i>
             <span>Product</span>
+        </a>
+        <a class="nav-link" href="{{ route('admin.invoices') }}">
+            <i class="fas fa-file-invoice"></i>
+            <span>Invoice</span>
         </a>
     </li>
 
